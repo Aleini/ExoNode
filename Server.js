@@ -1,4 +1,3 @@
-/*
 let http = require('http')
 let fs = require('fs')
 let url = require('url')
@@ -10,7 +9,9 @@ server.on('request', (request, response) => {
     let name = query.name ===undefined ? 'anonyme' : query.name
     fs.readFile('index.html','utf-8',(err,data)=> {
         if(err) {
-            response.writeHead(404)
+            response.writeHead(404,{
+                'Content-type':'text/html;charset=utf-8'
+                })
             response.end("Ce fichier n'existe pas")
         } else {
             response.writeHead('200',{
@@ -22,4 +23,4 @@ server.on('request', (request, response) => {
     })
 })
 server.listen(8080)
-*/
+
