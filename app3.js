@@ -24,9 +24,9 @@ io.sockets.on('connection', function (socket) {
         socket.pseudo=pseudo;
     })
 
-    socket.on('message',function(message){
+    /*socket.on('message',function(message){
         console.log(socket.pseudo + ' me parle ! Il me dit : ' + message);
-    })
+    })*/
 });
 
 

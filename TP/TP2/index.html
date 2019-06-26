@@ -9,24 +9,43 @@
 </head>
 
 <body>
-    <div id="Discussion">
+    <div>
         <h1>Le super Chat en temps réel !</h1>
 
-        <label for="message"></label>
-        <input type="text" placeholder="Votre message..." id="message">
-        <input type="button" value="Envoyer">
+        <form action="/" method="POST" id="form">
+            <input type="text" name="texte" placeholder="Votre message..." id="message" autofocus />
+            <input type="submit" id='button' value="Envoyer">
+        </form>
+
+        <section id="Discussion"></section>
 
         <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
         <script src="/socket.io/socket.io.js"></script>
         <script>
             var socket = io.connect('http://localhost:8080');
 
-            var pseudo = prompt('Quel est votre pseudo ?');
+            var pseudo = prompt('Votre pseudo : ');
             socket.emit('new', pseudo);
 
-            socket.on('message', function (message) {
-                $('#Discussion').append('<p><i>'+ message +'</i></p>')
+            $('form').on('submit',function(){
+                var texte = $('#message').val();
+                socket.emit('texte',texte);
+                afficherMessage(pseudo,texte);
+                $('#message').val('').focus();
+                return false;
+            });
+
+            socket.on('message', function (message, discussion) {
+                $('#Discussion').append('<p><i>' + message + '</i></p>');
             })
+
+            socket.on('texte', function (data) {
+                afficherMessage(data.pseudo,data.texte);
+            })
+
+            function afficherMessage(pseudo,message){
+                $('#Discussion').append('<p><u>' +  pseudo + '</u> : ' + message + '</p>');
+            }
         </script>
     </div>
 </body>
