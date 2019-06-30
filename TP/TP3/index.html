@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Liste course partagée</title>
+</head>
+
+<body>
+    <style>
+        a {
+            text-decoration: none;
+            font-size: 8px;
+        }
+    </style>
+    <div id='listeCourses'>
+        <h1>Ma liste de courses en ligne</h1>
+
+        <form action="/" method="POST" id="form">
+            <input type="text" name="texte" placeholder="" id="message" autofocus />
+            <input type="submit" id='button' value="Envoyer">
+        </form>
+    </div>
+
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io.connect('http://localhost:8080');
+
+        $('form').on('submit', function () {
+            var texte = $('#message').val();
+            socket.emit('texte', texte);
+            afficherMessage(texte);
+            $('#message').val('').focus();
+            return false;
+        });
+
+        socket.on('retour', function (texte) {
+                $('#listeCourses').append('<p><a id="close" href="#">&#x274C;</a> ' + texte + ' </p>');
+            })
+
+        function afficherMessage(element) {
+            $('#listeCourses').append('<p><a id="close" href="#">&#x274C;</a> ' + element + ' </p>');
+        }
+    </script>
+</body>
+
+</html>
