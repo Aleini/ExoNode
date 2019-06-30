@@ -12,12 +12,11 @@
     <style>
         a {
             text-decoration: none;
-            font-size: 8px;
+            font-size: 10px;
         }
     </style>
     <div id='listeCourses'>
         <h1>Ma liste de courses en ligne</h1>
-
         <form action="/" method="POST" id="form">
             <input type="text" name="texte" placeholder="" id="message" autofocus />
             <input type="submit" id='button' value="Envoyer">
@@ -29,7 +28,7 @@
     <script>
         var socket = io.connect('http://localhost:8080');
 
-        $('form').on('submit', function () {
+        $('#form').on('submit', function () {
             var texte = $('#message').val();
             socket.emit('texte', texte);
             afficherMessage(texte);
@@ -42,7 +41,7 @@
             })
 
         function afficherMessage(element) {
-            $('#listeCourses').append('<p><a id="close" href="#">&#x274C;</a> ' + element + ' </p>');
+            $('#listeCourses').append('<p><a id="close" href="#">&#x274C;</a>' + element + " </p>");
         }
     </script>
 </body>
