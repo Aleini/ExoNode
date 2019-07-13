@@ -1,30 +1,27 @@
 var mysql = require('mysql');
-var mysqlClient = mysql.createConnection({
-    host: "localhost",
-    user: "phpmyadmin",
-    password:"1035@leX",
-    database:"geographieFrance"
+
+console.log('Get connection ...');
+
+var conn = mysql.createConnection({
+  database: 'geographieFrance',
+  host: "localhost",
+  user: "phpmyadmin",
+  password: "1035@leX"
 });
 
-var Query = 'SELECT Ville.NomVille FROM Ville';
+conn.connect(function (err) {
+  if (err) throw err;
+  console.log("Connected!");
 
-mysqlClient.query(
-  Query,
-  function select(error, results, fields) {
-    if (error) {
-      console.log(error);
-      mySqlClient.end();
-      return;
+  var sql = "Select Region.NomRegion, Ville.NomVille FROM Region INNER JOIN Ville ON Ville.IdRegion=Region.IdRegion Where Ville.ChefLieuRegion IS TRUE";
+  console.log("SQL=" + sql);
+
+  conn.query(sql, function (err, rows, fields) {
+    if (err) throw err;
+    for (var i = 0; i < rows.length; i++) {
+      console.log("  - Nom de la Région : " + rows[i].NomRegion);
+      console.log("  - Nom de la Ville : " + rows[i].NomVille);
+      console.log("\n");
     }
-      
-    if ( results.length > 0 )  { 
-      var firstResult = results[ 0 ];
-      //console.log('id: ' + firstResult['id']);
-      //console.log('label: ' + firstResult['label']);
-      console.log('Nom de la ville : ' + firstResult['NomVille']);
-    } else {
-      console.log("Pas de données");
-    }
-    mySqlClient.end();
-  }
-);
+  });
+});
