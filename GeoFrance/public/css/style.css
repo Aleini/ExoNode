@@ -1,0 +1,24 @@
+h2 {
+    text-decoration: underline;
+}
+
+tr:nth-child(even) {
+    background-color:darkgrey;
+}
+
+tr:nth-child(even):hover {
+    background-color: grey;
+}
+
+tr:nth-child(odd) {
+    background-color: beige;
+}
+
+tr:nth-child(odd):hover {
+    background-color:floralwhite;
+}
+
+.flag{
+    height: 50px;
+    width: 55px;
+}

@@ -14,8 +14,8 @@
                     <% regions.forEach((Region, index) => { %>
                         <tr>
                             <th scope="row"><%= Region.IdRegion %></th>
-                            <td scope="row"><%= Region.NomRegion %> </td>
-                            <td scope="row"><%= Ville.ChefLieuRegion %></td>
+                            <td scope="row"><a href="#"><%= Region.NomRegion %></a></td>
+                            <td scope="row"><%= Region.NomVille %></td>
                         </tr>
                     <% }) %>
                 </tbody>
