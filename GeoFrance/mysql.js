@@ -5,6 +5,7 @@ const path = require('path');
 const app = express();
 
 const {HomePage} = require('./routes/index');
+const {regionPage} = require('./routes/region');
 const port = 8080;
 
 console.log('Get connection ...');
@@ -32,6 +33,7 @@ app.use(express.static(path.join(__dirname, 'public'))); // configure express to
 
 // routes for the app
 app.get('/', HomePage);
+app.get('/region', regionPage);
 
 // set the app to listen on the port
 app.listen(port, () => {

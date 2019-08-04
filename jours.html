@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Test</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"
+        integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
+</head>
+<h1>
+    <div id="test">
+
+    </div>
+</h1>
+
+<body>
+    <script type="text/javascript">
+        $(function () {
+            function IsBissextile(annee) {
+                if ((annee % 4 == 0) && ((annee % 100 != 0) || (annee % 400 == 0))) return 1;
+                else return 0;
+            }
+
+            // Calcule le numéro du jour d'une date dans l'année
+            // ex : le 1er juillet est le 182ème jour de l'année
+            function getDayOhTheYear(date) {
+                date = new Date(date);
+                newYearDay = new Date();
+                newYearDay.setMonth(0);
+                newYearDay.setDate(1);
+                newYearDay.setFullYear(date.getFullYear());
+                nbMillisecondes = date.getTime() - newYearDay.getTime();
+                return Math.ceil((((nbMillisecondes / 1000) / 60) / 60) / 24);
+            }
+
+            function nb_jours(date_deb, date_fin) {
+                var date1 = new Date(date_deb);
+                var date2 = new Date(date_fin);
+                date_deb = getDayOhTheYear(date_deb);
+                date_fin = getDayOhTheYear(date_fin);
+                var total = 0;
+                var annee_deb = date1.getFullYear();
+                var annee_fin = date2.getFullYear();
+                var num = 0; //nombre de jours feries a compter sur la duree totale
+                var compteur = 0; // la durée entre deux dates par année
+
+                var annee = annee_deb; // l'année en cours ( defaut : annee_deb )
+
+                while (annee <= annee_fin) {
+                    var compteur_jours = 0;
+
+                    var jours_feries = [
+                        getDayOhTheYear(annee + '-01-01'),
+                        getDayOhTheYear(annee + '-05-01'),
+                        getDayOhTheYear(annee + '-07-14'),
+                        getDayOhTheYear(annee + '-08-15'),
+                        getDayOhTheYear(annee + '-11-01'),
+                        getDayOhTheYear(annee + '-11-11'),
+                        getDayOhTheYear(annee + '-12-25'),
+                    ]
+
+                    if (annee == annee_deb && annee < annee_fin) {
+                        var d = date_deb;
+                        compteur_jours += (364 + IsBissextile(annee))
+                    }
+
+                    if (annee > annee_deb && annee < annee_fin) {
+                        d = getDayOhTheYear(annee + '-01-01');
+                        compteur_jours += (364 + IsBissextile(annee));
+                    }
+                    // si c'est la dernière année -> on commence au premier janvier; 
+                    //le compteur va jusqu'a la date d'arrivée
+                    if (annee == annee_fin && annee > annee_deb) {
+                        d = getDayOhTheYear(annee + '-01-01');
+                        compteur_jours += date_fin;
+                    }
+
+                    // si les deux dates sont dans la même année
+                    if (annee == annee_deb && annee_deb == annee_fin) {
+                        d = date_deb;
+                        compteur_jours += date_fin;
+                    }
+
+                    //on boucle les jours sur la période donnée
+                    while (d <= compteur_jours) {
+
+                        total = total + 1; // on ajoute 1 pour chaque jour passé en revue
+
+                        if (jours_feries.indexOf(d) != -1) {
+                            num++; // on ajoute 1 pour chaque jour férié rencontré
+                        }
+                        var today = new Date(date1);
+                        // On incrémente sur la date de début
+                        var tomorrow = new Date(date1.setDate(today.getDate() + 1));
+                
+                        if ((today.getDay() == 0) || (today.getDay() ==6) && (jours_feries.indexOf(d) == -1)) {
+                            num++;
+                        }
+                        today  = tomorrow;
+                        d++;
+                    }
+                    annee++; // on incremente l'année
+                }
+                console.log(total);
+                console.log(num);
+                var res = total - (num);
+
+                // nombre de jours entre les 2 dates fournies - nombre de jours non ouvrés
+                return res;
+            }
+            console.log(nb_jours('2019-08-06', '2019-09-03'));
+        })
+    </script>
+</body>
+
+</html>

@@ -8,7 +8,6 @@ module.exports = {
             res.render("index.ejs", {
                 regions: result
             });
-            console.log(result);
         });
     }
 };
