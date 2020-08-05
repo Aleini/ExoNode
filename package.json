@@ -6,7 +6,7 @@
         "dust": "^0.3.0",
         "ejs": "^2.6.2",
         "express": "^4.17.1",
-        "express-fileupload": "^1.1.5",
+        "express-fileupload": "^1.1.9",
         "find-my-way": "^2.1.0",
         "markdown": "~0.4",
         "morgan": "^1.9.1",
