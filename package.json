@@ -2,10 +2,10 @@
     "name": "app2",
     "version": "0.1.0",
     "dependencies": {
-        "body-parser": "^1.19.0",
+        "body-parser": "^1.20.1",
         "dust": "^0.3.0",
         "ejs": "^2.6.2",
-        "express": "^4.17.1",
+        "express": "^4.18.2",
         "express-fileupload": "^1.1.5",
         "find-my-way": "^2.1.0",
         "markdown": "~0.4",
